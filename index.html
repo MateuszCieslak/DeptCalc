@@ -1,0 +1,61 @@
+<html>
+<head>
+<meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+<label>Oprocentowanie: <label>
+<input v-model="percent">
+<br>
+<label>Kwota do spłaty: <label>
+<input v-model="amount">
+<br>
+<label>Miesieczna rata: <label>
+<input v-model="standard">
+<br>
+<label>Dodatek do raty: <label>
+<input v-model="add">
+<button v-on:click="calc">Oblicz</button>
+
+<p>{{ results }}</p>
+</div>
+
+</body>
+
+<script>
+
+function calcDept(dept, amount, percent) {
+    var cost = 0;
+    var iterations = 0;
+    while(dept > 0) {
+      var c = dept * (percent * 0.01) / 12;
+      var rata = amount - c;
+      cost += c;
+      dept = dept - rata;
+      iterations++;
+    }
+    
+    return { cost: Math.round(cost), months: iterations };
+}
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    percent: '4.68',
+  amount: '358289',
+  add: '',
+  standard: '2065',
+  results: ''
+  },
+  methods: {
+  calc: function() {
+    var result1 = calcDept(this.amount, this.standard, this.percent);
+    var result2 = calcDept(this.amount, (1 * this.standard) + (1 * this.add), this.percent);
+    
+    this.results = 'koszt ' + result1.cost + ', czas: ' + result1.months + ', koszt2: ' + result2.cost + ', czas2: ' + result2.months;
+  }
+  }
+})
+</script>
+</html>
