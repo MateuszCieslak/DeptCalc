@@ -17,7 +17,7 @@
 		}
 		
 		.description {
-			order: 2;
+			order: 1;
 		}
 	</style>
 </head>
@@ -63,7 +63,7 @@
 						Koszt = {{ results.normalCost }} zł
 					</div>
 					<div>
-						Czas = {{ formatPeriod(results.normalPeriod) }}
+						Czas = {{ formatPeriod(results.normalPeriod) }} ({{ results.normalPeriod }} rat)
 					</div>
 					<div>
 						Data zakończenia = {{ endDate(results.normalPeriod) }}
@@ -76,7 +76,7 @@
 						Koszt = {{ results.surchargeCost }} zł
 					</div>
 					<div>
-						Czas = {{ formatPeriod(results.surchargePeriod) }}
+						Czas = {{ formatPeriod(results.surchargePeriod) }} ({{ results.surchargePeriod }} rat)
 					</div>
 					<div>
 						Data zakończenia = {{ endDate(results.surchargePeriod) }}
@@ -89,6 +89,52 @@
 						{{ results.normalCost - results.surchargeCost }} zł
 					</div>
 				</div>
+
+				<div class="row">
+					<div class="col-12 col-sm-6">
+						<h3>Harmonogram bez nadpłat</h3>
+						<table class="table">
+							<thead>
+							<tr>
+								<th>Kapitał</th>
+								<th>Odsetki</th>
+								<th>Rata</th>
+								<th>Kapitał do spłaty</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr v-for="item in results.harmonogram1">
+								<td>{{ item.capital }}</td>
+								<td>{{ item.interest }}</td>
+								<td>{{ item.amount }}</td>
+								<td>{{ item.dept }}</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="col-12 col-sm-6">
+						<h3>Harmonogram z nadpłatami</h3>
+						<table class="table">
+							<thead>
+							<tr>
+								<th>Kapitał</th>
+								<th>Odsetki</th>
+								<th>Rata</th>
+								<th>Kapitał do spłaty</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr v-for="item in results.harmonogram2">
+								<td>{{ item.capital }}</td>
+								<td>{{ item.interest }}</td>
+								<td>{{ item.amount }}</td>
+								<td>{{ item.dept }}</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -99,15 +145,23 @@
 	function calcDept(dept, amount, percent) {
 		var cost = 0;
 		var iterations = 0;
+		var items = [];
 		while (dept > 0) {
 			var c = dept * (percent * 0.01) / 12;
 			var rata = amount - c;
 			cost += c;
 			dept = dept - rata;
 			iterations++;
+			items.push({
+				iterations: iterations,
+				dept: Math.round(dept),
+				capital: Math.round(rata),
+				interest: Math.round(c),
+				amount: Math.round(rata + c)
+			});
 		}
 
-		return { cost: Math.round(cost), months: iterations };
+		return { cost: Math.round(cost), months: iterations, items };
 	}
 
 	var app = new Vue({
@@ -133,8 +187,10 @@
 				this.results = {
 					normalCost: result1.cost,
 					normalPeriod: result1.months,
+					harmonogram1: result1.items,
 					surchargeCost: result2.cost,
-					surchargePeriod: result2.months
+					surchargePeriod: result2.months,
+					harmonogram2: result2.items
 				}
 				localStorage.setItem('data', JSON.stringify(this.$data));
 			},
@@ -157,6 +213,6 @@
 				return newDate.toLocaleDateString("pl");
 			}
 		}
-	})
+	});
 </script>
 </html>
