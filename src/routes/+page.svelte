@@ -14,11 +14,6 @@
 <section>
 	<h1 class="text-center heading">Kalkulator oszczędności nadpłacania kredytu</h1>
 
-	<p class="description text-muted">
-		Kalkulator oblicza ile zaoszczędzimy nadpłacając kredyt daną kwotą miesięcznie oraz w jakim czasie spłacimy go szybciej.
-		Kalkulator jest bardzo prosty i jego szacunki są przybliżone.
-	</p>
-
 	<Form on:calculated={e => results = e.detail} />
 
 	{#if results }

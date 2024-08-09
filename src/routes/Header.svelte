@@ -25,6 +25,9 @@
 				<a class="nav-link active" aria-current={$page.url.pathname === '/' ? 'page' : undefined} href="/">Home</a>
 			  </li>
 			  <li class="nav-item">
+				<a class="nav-link active" aria-current={$page.url.pathname === '/one-time' ? 'page' : undefined} href="/one-time">One time</a>
+			  </li>
+			  <li class="nav-item">
 				<a class="nav-link" aria-current={$page.url.pathname === '/about' ? 'page' : undefined} href="/about">About</a>
 			  </li>
 			</ul>
