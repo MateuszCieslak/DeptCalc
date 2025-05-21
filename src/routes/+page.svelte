@@ -117,7 +117,7 @@
 			<label for="capital" class="form-label">Kapitał</label>
 			<input 
 				type="number" 
-				inputmode="numeric"
+				inputmode="decimal"
 				required
 				min="1"
 				step="0.01" 
@@ -133,7 +133,7 @@
 			<label for="interest" class="form-label">Oprocentowanie</label>
 			<input 
 				type="number" 
-				inputmode="numeric"
+				inputmode="decimal"
 				required
 				min="0.1" 
 				step="0.01"
