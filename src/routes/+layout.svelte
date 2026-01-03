@@ -10,13 +10,13 @@
 
 	<main class="main">
 		{@render children()}
-	</main>
 
-	<footer>
-		<p>
-			Aplikacja stworzona przez <a href="https://codemat.pl" target="_blank">CodeMat</a>
-		</p>
-	</footer>
+		<footer>
+			<p>
+				Aplikacja stworzona przez <a href="https://codemat.pl" target="_blank">CodeMat</a>
+			</p>
+		</footer>
+	</main>
 </div>
 
 <style>
