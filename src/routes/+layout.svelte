@@ -14,7 +14,7 @@
 
 	<footer>
 		<p>
-			
+			Aplikacja stworzona przez <a href="https://codemat.pl" target="_blank">CodeMat</a>
 		</p>
 	</footer>
 </div>
